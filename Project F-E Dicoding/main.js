@@ -9,8 +9,6 @@ function generatedID() {
     return +new Date();
 }
 
-localStorage.setItem('book', 'BOOK_APPS');
-
 function bookdata(id, title, author, year, isCompleted) {
   return {
         id: id,
@@ -49,15 +47,10 @@ function bookdata(id, title, author, year, isCompleted) {
 /** Tombol booksubmit */
 var button = document.getElementById("bookSubmit");
 
-button.addEventListener("click", function() {
-    alert("Berhasil input judul buku");
-    localStorage.name = inputBook.value;
-});
-
 /** Fungsi yang digunakan untuk menyimpan data buku */ 
 function saveBook() {
   if (isStorageExist()) {
-    const parsed = JSON.stringify(saved);
+    const parsed = JSON.stringify(BOOK_KEY);
     localStorage.setItem(BOOK_KEY, parsed);
 
     handleStorageChange();
@@ -81,15 +74,15 @@ function showBook() {
     article.classList.add ('book_item');
     
     const h3 = document.createElement('h3');
-    h3.innerText = book.textTitle;
+    h3.innerText = book.title;
     article.appendChild(h3);
     
     const p1 = document.createElement('p');
-    p1.innerText = 'Penulis : ' + book.textAuthor;
+    p1.innerText = 'Penulis : ' + book.author;
     article.appendChild(p1);
     
     const p2 = document.createElement('p');
-    p2.innerText = 'Tahun : ' + book.textYear;
+    p2.innerText = 'Tahun : ' + book.year;
     article.appendChild(p2);
     
     const divAction = document.createElement('div');
@@ -183,13 +176,16 @@ function keepBook() {
   
   /** Fungsi untuk memuat data dari localStorage */
   function loadDataFromStorage() {
-      const serializedData = localStorage.getItem(saved);
+      const serializedData = localStorage.getItem(BOOK_KEY);
       let book = JSON.parse(serializedData);
   
       if (book !== null) {
+          for (const bookItem of book) {
               saved.push(saved);
           } 
       }
+    showBook();
+  }
 
 /** Tanda buku selesai dibaca */
 function toggleBookStatus(article, isComplete) {
