@@ -56,7 +56,7 @@ button.addEventListener("click", function() {
 
 /** Fungsi yang digunakan untuk menyimpan data buku */ 
 function saveBook() {
-  if (isStorageExist) {
+  if (isStorageExist()) {
     const parsed = JSON.stringify(saved);
     localStorage.setItem(BOOK_KEY, parsed);
 
